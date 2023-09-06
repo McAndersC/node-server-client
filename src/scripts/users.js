@@ -2,7 +2,7 @@ import userservice from "./user.service.js";
 
 const users = {};
 
-users.create = async () => {
+users.create = () => {
 
     const form = document.querySelector('#createForm');
 
