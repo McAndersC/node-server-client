@@ -5,12 +5,14 @@ userservice.endpoint = 'http://localhost:3000/user';
 userservice.createUser = async (elements) => {
 
     // Destructure the elements object.
-    const { firstname, surname, email, age, street, zip } = elements;
+    const { firstname, surname, email, age, street, zip, username, password } = elements;
 
     // Create a user object.
     let user = {
         firstname: firstname.value,
         surname: surname.value,
+        username: username.value,
+        password: password.value,
         email: email.value,
         age: age.value,
         street: street.value,
@@ -58,13 +60,15 @@ userservice.deleteUser = async (elements) => {
 userservice.updateUser = async (elements) => {
 
     // Destructure the elements object.
-    const { firstname, surname, email, age, street, zip, member } = elements;
+    const { firstname, surname, email, age, street, zip, member, username, password } = elements;
 
     // Create a user object.
     let user = {
         firstname: firstname.value,
         surname: surname.value,
         email: email.value,
+        username: username.value,
+        password: password.value,
         age: age.value,
         street: street.value,
         zip: zip.value,

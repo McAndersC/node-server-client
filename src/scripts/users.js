@@ -30,6 +30,7 @@ users.read = async () => {
             <td>${user.firstname}</td>
             <td>${user.surname}</td>
             <td>${user.email}</td>
+            <td>${user.username}</td>
             <td>${user.age}</td>
             <td>${user.street}</td>
             <td>${user.zip}</td>
