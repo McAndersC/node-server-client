@@ -1,7 +1,7 @@
 const userservice = {};
 userservice.endpoint = 'http://localhost:3000/user';
 
-// Create Users.
+// Create User.
 userservice.createUser = async (elements) => {
 
     // Destructure the elements object.
@@ -36,27 +36,7 @@ userservice.getUsers = async () => {
 
 }
 
-// Update Users.
-userservice.deleteUser = async (elements) => {
-
-    // Destructure the elements object.
-    const { email } = elements;
-
-    // Create a user object.
-    let user = {
-        email: email.value,
-    }
-
-    // Send the user object to the server.
-    return fetch(userservice.endpoint, { 
-        method: 'DELETE', 
-        body: JSON.stringify(user), 
-        headers: { 'Content-Type': 'application/json' } 
-    }).then((response) => response.json()); 
-
-};
-
-// Update Users.
+// Update User.
 userservice.updateUser = async (elements) => {
 
     // Destructure the elements object.
@@ -85,6 +65,26 @@ userservice.updateUser = async (elements) => {
     }).then((response) => response.json()); 
 
   
+};
+
+// Delete User.
+userservice.deleteUser = async (elements) => {
+
+    // Destructure the elements object.
+    const { email } = elements;
+
+    // Create a user object.
+    let user = {
+        email: email.value,
+    }
+
+    // Send the user object to the server.
+    return fetch(userservice.endpoint, { 
+        method: 'DELETE', 
+        body: JSON.stringify(user), 
+        headers: { 'Content-Type': 'application/json' } 
+    }).then((response) => response.json()); 
+
 };
 
 export default userservice;

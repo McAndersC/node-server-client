@@ -1,4 +1,5 @@
 import users from "./users.js";
+import products from "./products.js";
 
 const app = {};
 
@@ -8,6 +9,11 @@ app.init = () => {
     users.read();
     users.update();
     users.delete();
+
+    products.create();
+    products.read();
+    products.update();
+    products.delete();
 
 };
 
