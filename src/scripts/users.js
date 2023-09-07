@@ -53,9 +53,36 @@ users.read = async () => {
   
 };
 
-users.update = () => {
+users.update = async () => {
 
     const form = document.querySelector('#updateForm');
+
+    // We find the users email in the URL.
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // We get the user from the server by email.
+    let user = await userservice.getUserByEmail(urlParams.get('email'));
+
+    // We get the first user from the array.
+    user = user.data[0];
+
+    if(user)
+    {
+        // Destructure the elements object.
+        const { firstname, surname, email, age, street, zip, member, username, password } = form.elements;
+
+        // We set the value of the form fields.
+        firstname.value = user.firstname;
+        surname.value = user.surname;
+        email.value = user.email;
+        age.value = user.age;
+        street.value = user.street;
+        zip.value = user.zip;
+        member.cheked = user.member;
+        username.value = user.username;
+        password.value = user.password;
+
+    }
 
     if(form)
     {

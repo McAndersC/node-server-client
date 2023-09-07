@@ -1,5 +1,5 @@
 const userservice = {};
-userservice.endpoint = 'http://localhost:3000/user';
+userservice.endpoint = 'http://localhost:3000';
 
 // Create User.
 userservice.createUser = async (elements) => {
@@ -31,7 +31,15 @@ userservice.createUser = async (elements) => {
 // Read Users
 userservice.getUsers = async () => {
 
-    return fetch(userservice.endpoint)
+    return fetch(userservice.endpoint + '/users')
+        .then((response) => response.json())
+
+}
+
+// Read Users
+userservice.getUserByEmail = async (email) => {
+
+    return fetch(userservice.endpoint + '/user?email=' + email)
         .then((response) => response.json())
 
 }
@@ -58,7 +66,7 @@ userservice.updateUser = async (elements) => {
     console.log(user)
 
     // Send the user object to the server.
-    return fetch(userservice.endpoint, { 
+    return fetch(userservice.endpoint + '/user', { 
         method: 'PUT', 
         body: JSON.stringify(user), 
         headers: { 'Content-Type': 'application/json' } 
@@ -79,7 +87,7 @@ userservice.deleteUser = async (elements) => {
     }
 
     // Send the user object to the server.
-    return fetch(userservice.endpoint, { 
+    return fetch(userservice.endpoint + '/user', { 
         method: 'DELETE', 
         body: JSON.stringify(user), 
         headers: { 'Content-Type': 'application/json' } 
