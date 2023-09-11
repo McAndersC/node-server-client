@@ -1,3 +1,4 @@
+import { userCreateHandler, userUpdateHandler } from "./user.handlers.js";
 import userservice from "./user.service.js";
 
 const users = {};
@@ -5,21 +6,11 @@ const users = {};
 users.create = () => {
 
     const form = document.querySelector('#createForm');
-
+    
     if(form)
     {
-        form.addEventListener('submit', async (e) => {
-
-            e.preventDefault();
-            
-            const result = await userservice.createUser(form.elements);
-      
-            console.log('Create Form Result', result);
-           
-            form.reset();
-        });
+        form.addEventListener('submit', (e) => userCreateHandler(e));
     }
-
 
 };
 
@@ -27,7 +18,7 @@ users.read = async () => {
 
     const listTmpl = (user) => {
         return `<tr>
-            <td>${user.firstname}</td>
+            <td><a href="/users/update.html?email=${user.email}">${user.firstname}</a></td>
             <td>${user.surname}</td>
             <td>${user.email}</td>
             <td>${user.username}</td>
@@ -59,43 +50,39 @@ users.update = async () => {
 
     // We find the users email in the URL.
     const urlParams = new URLSearchParams(window.location.search);
+    const email = urlParams.get('email');
 
-    // We get the user from the server by email.
-    let user = await userservice.getUserByEmail(urlParams.get('email'));
-
-    // We get the first user from the array.
-    user = user.data[0];
-
-    if(user)
+    if(email)
     {
-        // Destructure the elements object.
-        const { firstname, surname, email, age, street, zip, member, username, password } = form.elements;
+        // We get the user from the server by email.
+        let user = await userservice.getUserByEmail(email);
 
-        // We set the value of the form fields.
-        firstname.value = user.firstname;
-        surname.value = user.surname;
-        email.value = user.email;
-        age.value = user.age;
-        street.value = user.street;
-        zip.value = user.zip;
-        member.cheked = user.member;
-        username.value = user.username;
-        password.value = user.password;
+        // We get the first user from the array.
+        user = user.data[0];
 
+        if(user)
+        {
+            for (const key in user) {
+              
+                if(form.elements[key]) {
+                    console.log('Løber og alle KEYs i vores object', key, user, user[key], form.elements[key].value, typeof user[key])
+                    
+                    if(typeof user[key] === 'boolean') {
+                        form.elements[key].checked = user[key];
+                    }
+                    else {   
+                        form.elements[key].value = user[key];
+                    }
+                }
+            }
+
+        }
     }
+  
 
     if(form)
     {
-        form.addEventListener('submit', async (e) => {
-
-            e.preventDefault();
-            
-            const result = await userservice.updateUser(form.elements);
-      
-            console.log('Update Form Result', result);
-           
-            form.reset();
-        });
+        form.addEventListener('submit', (e) => userUpdateHandler(e));
     }
 
 

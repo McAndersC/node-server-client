@@ -1,4 +1,4 @@
-import users from "./users.js";
+import users from "./users/users.js";
 import products from "./products.js";
 
 const app = {};
