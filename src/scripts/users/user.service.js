@@ -1,14 +1,15 @@
 const userservice = {};
-userservice.endpoint = 'http://localhost:3000/user/';
-userservice.endpointUsers = 'http://localhost:3000/users/';
 
-// Create User.
+userservice.endpoint = {
+    user : 'http://localhost:3000/user/',
+    users : 'http://localhost:3000/users/',
+}
+
+// Opret Bruger.
 userservice.createUser = async (user) => {
 
-
-
     // Send the user object to the server.
-    return fetch(userservice.endpoint, { 
+    return fetch(userservice.endpoint.user, { 
         method: 'POST', 
         body: JSON.stringify(user), 
         headers: { 'Content-Type': 'application/json' } 
@@ -16,27 +17,27 @@ userservice.createUser = async (user) => {
     
 };
 
-// Read Users
+// Hent Alle brugere.
 userservice.getUsers = async () => {
 
-    return fetch(userservice.endpointUsers)
+    return fetch(userservice.endpoint.users)
         .then((response) => response.json())
 
 }
 
-// Read Users
+// Hent en bruger ved at benytte email´en som indentifikation.
 userservice.getUserByEmail = async (email) => {
 
-    return fetch(userservice.endpoint + email)
+    return fetch(userservice.endpoint.user + email)
         .then((response) => response.json())
 
 }
 
-// Update User.
+// Opdatér en bruger, vi modtager "bruger" fra vores formHandler 
+// og sender det til serveren.
 userservice.updateUser = async (user) => {
 
-    // Send the user object to the server.
-    return fetch(userservice.endpoint, { 
+    return fetch(userservice.endpoint.user, { 
         method: 'PUT', 
         body: JSON.stringify(user), 
         headers: { 'Content-Type': 'application/json' } 
@@ -44,19 +45,10 @@ userservice.updateUser = async (user) => {
 
 };
 
-// Delete User.
-userservice.deleteUser = async (elements) => {
+// Slet en Bruger.
+userservice.deleteUser = async (user) => {
 
-    // Destructure the elements object.
-    const { email } = elements;
-
-    // Create a user object.
-    let user = {
-        email: email.value,
-    }
-
-    // Send the user object to the server.
-    return fetch(userservice.endpoint, { 
+    return fetch(userservice.endpoint.user, { 
         method: 'DELETE', 
         body: JSON.stringify(user), 
         headers: { 'Content-Type': 'application/json' } 
